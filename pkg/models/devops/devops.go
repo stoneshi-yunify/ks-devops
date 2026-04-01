@@ -647,12 +647,12 @@ func (d devopsOperator) GetNodesDetail(projectName, pipelineName, runId string, 
 		return nil, err
 	}
 
-	Nodes, marshalErr := json.Marshal(respNodes)
+	nodes, marshalErr := json.Marshal(respNodes)
 	if marshalErr != nil {
 		klog.Error(marshalErr)
 		return nil, marshalErr
 	}
-	err = json.Unmarshal(Nodes, &nodesDetails)
+	err = json.Unmarshal(nodes, &nodesDetails)
 	if err != nil {
 		klog.Error(err)
 		return nil, err
