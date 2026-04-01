@@ -647,8 +647,12 @@ func (d devopsOperator) GetNodesDetail(projectName, pipelineName, runId string, 
 		return nil, err
 	}
 
-	Nodes, err := json.Marshal(respNodes)
-	err = json.Unmarshal(Nodes, &nodesDetails)
+	nodes, marshalErr := json.Marshal(respNodes)
+	if marshalErr != nil {
+		klog.Error(marshalErr)
+		return nil, marshalErr
+	}
+	err = json.Unmarshal(nodes, &nodesDetails)
 	if err != nil {
 		klog.Error(err)
 		return nil, err
@@ -658,6 +662,7 @@ func (d devopsOperator) GetNodesDetail(projectName, pipelineName, runId string, 
 	for i, v := range respNodes {
 		wg.Add(1)
 		go func(nodeId string, index int) {
+			defer wg.Done()
 			// We have to clone the request to prevent concurrent header writes in the next process
 			Steps, err := d.GetNodeSteps(projectName, pipelineName, runId, nodeId, req.Clone(context.TODO()))
 			if err != nil {
@@ -666,7 +671,6 @@ func (d devopsOperator) GetNodesDetail(projectName, pipelineName, runId string, 
 			}
 
 			stepChan <- &devops.NodesStepsIndex{Id: index, Steps: Steps}
-			wg.Done()
 		}(v.ID, i)
 	}
 
@@ -820,7 +824,11 @@ func (d devopsOperator) GetBranchNodesDetail(projectName, pipelineName, branchNa
 		klog.Error(err)
 		return nil, err
 	}
-	Nodes, err := json.Marshal(respNodes)
+	Nodes, marshalErr := json.Marshal(respNodes)
+	if marshalErr != nil {
+		klog.Error(marshalErr)
+		return nil, marshalErr
+	}
 	err = json.Unmarshal(Nodes, &nodesDetails)
 	if err != nil {
 		klog.Error(err)
@@ -831,6 +839,7 @@ func (d devopsOperator) GetBranchNodesDetail(projectName, pipelineName, branchNa
 	for i, v := range nodesDetails {
 		wg.Add(1)
 		go func(nodeId string, index int) {
+			defer wg.Done()
 			Steps, err := d.GetBranchNodeSteps(projectName, pipelineName, branchName, runId, nodeId, req)
 			if err != nil {
 				klog.Error(err)
@@ -838,7 +847,6 @@ func (d devopsOperator) GetBranchNodesDetail(projectName, pipelineName, branchNa
 			}
 
 			stepChan <- &devops.NodesStepsIndex{Id: index, Steps: Steps}
-			wg.Done()
 		}(v.ID, i)
 	}
 
@@ -1082,9 +1090,15 @@ func getInputReqBody(reqBody io.ReadCloser) (newReqBody io.ReadCloser, err error
 	if checkBody.Abort != true && checkBody.Parameters == nil {
 		workRound.Parameters = []devops.CheckPlayloadParameters{}
 		workRound.ID = checkBody.ID
-		jsonBody, _ = json.Marshal(workRound)
+		jsonBody, err = json.Marshal(workRound)
+		if err != nil {
+			return nil, err
+		}
 	} else {
-		jsonBody, _ = json.Marshal(checkBody)
+		jsonBody, err = json.Marshal(checkBody)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	newReqBody = parseBody(bytes.NewBuffer(jsonBody))

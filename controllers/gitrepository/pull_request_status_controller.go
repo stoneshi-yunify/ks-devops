@@ -288,10 +288,22 @@ func (r *PullRequestStatusReconciler) getTimeSinceFinished(time *metav1.Time) (s
 	timeUnit := compileRegex.FindStringSubmatch(duringTime)
 
 	sinceTimeList := compileRegex.Split(duringTime, 2)
+
+	// Check bounds to prevent panic
+	if len(sinceTimeList) == 0 || len(timeUnit) == 0 {
+		return time.Format("2006-01-02")
+	}
+
 	timeNum := strings.Split(sinceTimeList[0], ".")
+	if len(timeNum) == 0 {
+		return time.Format("2006-01-02")
+	}
 
 	sinceTime = timeNum[0] + timeUnit[0]
-	timeToInt, _ := strconv.Atoi(timeNum[0])
+	timeToInt, err := strconv.Atoi(timeNum[0])
+	if err != nil {
+		return time.Format("2006-01-02")
+	}
 
 	if timeUnit[0] == "h" {
 		if timeToInt >= 24 && timeToInt < 720 {

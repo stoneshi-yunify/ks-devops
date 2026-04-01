@@ -450,7 +450,11 @@ func (h *ProjectPipelineHandler) SubmitInputStep(req *restful.Request, resp *res
 			"message": fmt.Sprintf("%v", err),
 		}
 
-		response, _ = json.Marshal(msg)
+		response, err = json.Marshal(msg)
+		if err != nil {
+			parseErr(err, resp)
+			return
+		}
 	} else {
 		response, err = h.devopsOperator.SubmitInputStep(projectName, pipelineName, runId, nodeId, stepId, req.Request)
 		if err != nil {
@@ -656,7 +660,11 @@ func (h *ProjectPipelineHandler) SubmitBranchInputStep(req *restful.Request, res
 			"message": fmt.Sprintf("%v", err),
 		}
 
-		response, _ = json.Marshal(msg)
+		response, err = json.Marshal(msg)
+		if err != nil {
+			parseErr(err, resp)
+			return
+		}
 	} else {
 		response, err = h.devopsOperator.SubmitBranchInputStep(projectName, pipelineName, branchName, runId, nodeId, stepId, req.Request)
 		if err != nil {

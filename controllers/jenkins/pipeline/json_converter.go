@@ -133,6 +133,9 @@ func (r *JenkinsfileReconciler) updateAnnotations(annotations map[string]string,
 		}
 
 		// update annotations
+		if pipeline.Annotations == nil {
+			pipeline.Annotations = make(map[string]string)
+		}
 		pipeline.Annotations[v1alpha3.PipelineJenkinsfileValueAnnoKey] = annotations[v1alpha3.PipelineJenkinsfileValueAnnoKey]
 		pipeline.Annotations[v1alpha3.PipelineJenkinsfileEditModeAnnoKey] = annotations[v1alpha3.PipelineJenkinsfileEditModeAnnoKey]
 		pipeline.Annotations[v1alpha3.PipelineJenkinsfileValidateAnnoKey] = annotations[v1alpha3.PipelineJenkinsfileValidateAnnoKey]
@@ -176,6 +179,9 @@ func (r *JenkinsfileReconciler) updateAnnotationsAndJenkinsfile(annotations map[
 		}
 
 		// update annotations
+		if pipeline.Annotations == nil {
+			pipeline.Annotations = make(map[string]string)
+		}
 		pipeline.Annotations[v1alpha3.PipelineJenkinsfileEditModeAnnoKey] = annotations[v1alpha3.PipelineJenkinsfileEditModeAnnoKey]
 		pipeline.Annotations[v1alpha3.PipelineJenkinsfileValidateAnnoKey] = annotations[v1alpha3.PipelineJenkinsfileValidateAnnoKey]
 		pipeline.Spec.Pipeline.Jenkinsfile = jenkinsfile
