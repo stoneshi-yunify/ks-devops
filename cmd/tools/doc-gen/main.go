@@ -99,7 +99,10 @@ func generateSwaggerJson() []byte {
 
 	swagger := restfulspec.BuildSwagger(config)
 
-	data, _ := json.MarshalIndent(swagger, "", "  ")
+	data, err := json.MarshalIndent(swagger, "", "  ")
+	if err != nil {
+		log.Fatal(err)
+	}
 	err = os.WriteFile(output, data, 0644)
 	if err != nil {
 		log.Fatal(err)

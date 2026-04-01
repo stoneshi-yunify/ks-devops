@@ -108,6 +108,9 @@ func (r *Reconciler) obtainAndUpdatePipelineMetadata(pipeline *v1alpha3.Pipeline
 		return err
 	}
 	// update annotation
+	if pipeline.Annotations == nil {
+		pipeline.Annotations = make(map[string]string)
+	}
 	pipeline.Annotations[v1alpha3.PipelineJenkinsMetadataAnnoKey] = string(metadataJSON)
 	return nil
 }
@@ -136,6 +139,9 @@ func (r *Reconciler) obtainAndUpdatePipelineBranches(pipeline *v1alpha3.Pipeline
 	}
 
 	// update annotation
+	if pipeline.Annotations == nil {
+		pipeline.Annotations = make(map[string]string)
+	}
 	pipeline.Annotations[v1alpha3.PipelineJenkinsBranchesAnnoKey] = string(branchesJSON)
 	return nil
 }

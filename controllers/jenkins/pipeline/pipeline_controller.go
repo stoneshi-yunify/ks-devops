@@ -338,6 +338,9 @@ func (c *Controller) updatePipeline(ctx context.Context, name string, nsName str
 		}
 		if pipeline.Annotations != nil {
 			// update annotations
+			if newPipeline.Annotations == nil {
+				newPipeline.Annotations = make(map[string]string)
+			}
 			newPipeline.Annotations[devopsv1alpha3.PipelineSyncStatusAnnoKey] = pipeline.Annotations[devopsv1alpha3.PipelineSyncStatusAnnoKey]
 			newPipeline.Annotations[devopsv1alpha3.PipelineSpecHash] = pipeline.Annotations[devopsv1alpha3.PipelineSpecHash]
 		}

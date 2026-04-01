@@ -30,6 +30,9 @@ func getAuthMethod(repoURL, username, password string, sshKey []byte) (transport
 		if err != nil {
 			return nil, fmt.Errorf("failed to create SSH auth: %w", err)
 		}
+		// TODO: Implement proper host key verification instead of insecurely ignoring host keys.
+		// This is a temporary measure. Proper host key verification should be implemented
+		// by providing known hosts or using a custom HostKeyCallback that validates host keys.
 		publicKeys.HostKeyCallback = gossh.InsecureIgnoreHostKey()
 
 		return publicKeys, nil
