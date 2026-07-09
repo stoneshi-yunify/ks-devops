@@ -399,8 +399,8 @@ github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 h1:BQSFePA1RWJOl
 github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99/go.mod h1:1lJo3i6rXxKeerYnT8Nvf0QmHCRC1n8sfWVwXF2Frvo=
 github.com/jenkins-x/go-scm v1.14.44 h1:q670h0zho+U5VdhC+Xo6MLWnFXCok1Pk/bbhxmJdF9Y=
 github.com/jenkins-x/go-scm v1.14.44/go.mod h1:1RPxLZndnvu31XhFZ+RTvXiHmMX70HkQ17bRupTQxGs=
-github.com/jenkins-zh/jenkins-client v0.0.15 h1:2oOJpnnc60I4qFxI5cFHHAN68J6iNxjy5XLDVN+c3T8=
-github.com/jenkins-zh/jenkins-client v0.0.15/go.mod h1:ZUx+c/b4TOC8rjll11y5Kz3gHakKfGYC/Gl+g7jAQ00=
+github.com/jenkins-zh/jenkins-client v0.0.16 h1:N/rAvNh7uLM+SVzx9QSJHQI6B73CW2Uvc+ulJihUD4w=
+github.com/jenkins-zh/jenkins-client v0.0.16/go.mod h1:ZUx+c/b4TOC8rjll11y5Kz3gHakKfGYC/Gl+g7jAQ00=
 github.com/jenkins-zh/jenkins-client/pkg/k8s v0.0.0-20230828075918-608f347ef851 h1:Iv9BOcVnYis/yc5vVGgIlIrqPcBm52j5FldKmUjQtFM=
 github.com/jenkins-zh/jenkins-client/pkg/k8s v0.0.0-20230828075918-608f347ef851/go.mod h1:Gfq/TcOliP3fB+kNBpv/Hrx8XGt0Bz0VPJ7BxdY/u2U=
 github.com/jessevdk/go-flags v1.5.0/go.mod h1:Fw0T6WPc1dYxT4mKEZRfG5kJhaTDP9pj1c2EWnYs/m4=
